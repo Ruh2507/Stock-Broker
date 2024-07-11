@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Broker Client Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div id="loginForm" class="login-form">
+            <h2>Login to Your Account</h2>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <button onclick="login()">Login</button>
+        </div>
+
+        <div id="dashboard" class="dashboard hidden">
+            <h2>Welcome, <span id="userEmail"></span>!</h2>
+            <div id="stockList" class="stock-list">
+                <!-- Stocks will be dynamically added here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+<script>
+    // script.js
+
+// Supported stocks
+const supportedStocks = ['GOOG', 'TSLA', 'AMZN', 'META', 'NVDA'];
+
+// Function to generate a random stock price (for simulation)
+function generateRandomPrice() {
+    return (Math.random() * 1000).toFixed(2); // Generate a random number up to 1000 for price
+}
+
+// Function to simulate updating stock prices every second
+function updateStockPrices() {
+    setInterval(() => {
+        const stockList = document.getElementById('stockList');
+        stockList.innerHTML = ''; // Clear previous stock list
+
+        supportedStocks.forEach(stock => {
+            const price = generateRandomPrice();
+            const stockItem = document.createElement('div');
+            stockItem.classList.add('stock-item');
+            stockItem.innerHTML = `<strong>${stock}</strong>: $${price}`;
+            stockList.appendChild(stockItem);
+        });
+    }, 1000); // Update every second
+}
+
+// Function to handle user login
+function login() {
+    const email = document.getElementById('email').value;
+
+    // Simulate authentication (replace with actual backend integration)
+    if (email) {
+        document.getElementById('loginForm').classList.add('hidden');
+        document.getElementById('dashboard').classList.remove('hidden');
+        document.getElementById('userEmail').textContent = email;
+        updateStockPrices(); // Start updating stock prices
+    } else {
+        alert('Please enter your email.');
+    }
+}
+
+</script>
